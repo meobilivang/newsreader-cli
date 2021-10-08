@@ -19,23 +19,22 @@ class Article:
     def __get_description__(self):
         return self.description
     
-    def __get_content__(self):
+    def __get_text_content__(self):
         return self.text_content
 
     def __get_date__(self):
         return self.date
     
-    def __get_catergory(self):
+    def __get_catergory__(self):
         return self.category
     
-    def __set_date(self, date):
+    def __set_date__(self, date):
         self.date = date
-
-    def __insert_text_content_(self, new_text_content):
-        self.text_content.append(new_text_content)
+        return
     
+    def __set_text_content__(self, new_text_content_list):
+        self.text_content = new_text_content_list
     
-    def __insert_category(self, new_category):
-        self.category.insert(new_category)
-        
+    def __set_category__(self, new_category_list):
+        self.category = new_category_list
     
