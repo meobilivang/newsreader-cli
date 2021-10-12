@@ -30,7 +30,6 @@ class Article:
     
     def __set_date__(self, date):
         self.date = date
-        return
     
     def __set_text_content__(self, new_text_content_list):
         self.text_content = new_text_content_list
