@@ -2,7 +2,7 @@ from typing import Text
 
 
 class Article:
-    def __init__(self, title = "Empty Title", url = "Empty URL", description = "Empty Description", text_content = [], date = "Unidentified", category = []):
+    def __init__(self, title = "", url = "", description = "", text_content = [], date = "", category = []):
         self.title = title
         self.url = url
         self.description = description
