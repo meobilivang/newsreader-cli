@@ -6,13 +6,20 @@ from bs4 import BeautifulSoup
 from article import Article
 
 BASE_URL = 'https://vnexpress.net/'
+NOT_SUPPORTED_FORMAT = "video"
 
-class Scraper:
-    def __init__(self) -> None:
-        pass
+class NewsScraper:
+    def __init__(self, categories = {}):
+        self.categories = categories
+    
+    def __get_categories__():
+        return self.categories
+    
+    def __set_categories_(input_categories):
+        self.categories = input_categories
+        
 
 def make_soup(url: str = None) -> BeautifulSoup:
-    
     try:
         page = requests.get(BASE_URL if url is None else url).text
         time.sleep(0.1)
@@ -27,14 +34,11 @@ def text_convert(input) -> str:
     """
     return "" if input is None else input.get_text().strip()
 
-def main_page_scrape() -> List[Article]:
-    soup = make_soup()
-    article_list_raw = soup.find_all('article')
-    
-    article_list = []
+def page_scrape(url = "") -> List[Article]:
+    soup = make_soup(url)
 
-    # for article_cate in article_category_raw:
-    #     print(article_cate['data-id'])
+    article_list_raw = soup.find_all('article')    
+    article_list = []
 
     for article_raw in article_list_raw:
         article_list.append(Article(
@@ -47,9 +51,23 @@ def main_page_scrape() -> List[Article]:
 
 def main_page_category():
     soup = make_soup()
-    article_category_raw = soup.find_all('li', { "data-id": True })
+    
+    category_dict = {}
 
-    return [] 
+    for category_raw in soup.find_all('li', { "data-id": True }):
+        inner_tag = category_raw.find("a")
+
+        category_url = inner_tag.get('href')
+        category_title = inner_tag.text.replace('\n', '').replace('\r', '')
+        
+        if category_title.lower() != NOT_SUPPORTED_FORMAT: 
+            category_dict[category_title] = category_url
+
+    #__set_categories__(category_dict)
+    # for x, (key, val) in enumerate(category_dict.items()):
+    #     print(x, key, val)
+    # TODO: Remove
+    return category_dict
 
 
 def article_scrape(article: Article) -> Article:
@@ -75,6 +93,4 @@ def article_scrape(article: Article) -> Article:
     print(article.__dict__)
     return article
 
-article_list = main_page_scrape()
-print(article_list[0].url)
-article = article_scrape(article_list[0])
+article_list = main_page_category()
