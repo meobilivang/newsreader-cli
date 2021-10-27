@@ -25,7 +25,7 @@ class Console:
             """
             #########################################################
 
-                                        BYE BYE
+                                    THANK YOU!
             
             #########################################################
             """
@@ -89,13 +89,24 @@ class Console:
 
             return 0                        # Returns to Menu
         elif (user_input == '1'):           # Show categories
-            self.display_categories(scraper.__get_categories())
+            categories = scraper.__get_categories()
+            categories_key_list = list(categories.keys())
 
-            category_execution = 0 
-            while category_execution <= 0:
-                category_user_input = input(constants.PROMPT_INPUT)
+            self.display_categories(categories_key_list)
 
-                category_execution = self.handler_page(user_input, scraper.__get_articles__())
+            category_pick_execution = 0 
+            while category_pick_execution <= 0:
+                category_pick_user_input = input(constants.PROMPT_INPUT)
+                if (int(category_pick_user_input) < 0 
+                    or int(category_pick_user_input) >= len(categories_key_list)):     # Invalid index
+                    print("Invalid Category.")
+                else:
+                    category_pick_execution = 1
+            
+            # Scrape Page by category
+            scraper.page_scrape()
+
+            category_execution = self.handler_page(user_input, scraper.__get_articles__())
 
             return 0                        # Returns to Menu
         elif (user_input == '2'):           # Exit
@@ -112,7 +123,8 @@ class Console:
             article_pick_execution = 0
             while article_pick_execution <= 0:
                 article_pick_index = input("Choose an article to read:")
-                if (int(article_pick_index) < 0 or int(article_pick_index) >= len(article_list)):     # Invalid index
+                if (int(article_pick_index) < 0 
+                    or int(article_pick_index) >= len(article_list)):     # Invalid index
                     print("Invalid article.")
                 else:
                     article_pick_execution = 1
