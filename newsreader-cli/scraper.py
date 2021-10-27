@@ -12,7 +12,6 @@ class NewsScraper:
     def __init__(self, categories = {}, articles_current_page = []):
         self.categories = categories
         self.articles_current_page = articles_current_page
-        self.page_scrape()                                  # Default values
     
     def __get_categories__(self):
         return self.categories
@@ -24,6 +23,7 @@ class NewsScraper:
         return self.articles_current_page
     
     def __set_articles__(self, articles):
+        print(articles)
         self.articles = articles
     
     def clear_articles(self):
@@ -31,6 +31,9 @@ class NewsScraper:
             Clear articles list
         """
         del self.articles [:]
+    
+    def default(self):
+        self.page_scrape()                                  # Default values
 
     def make_soup(self, url: str = None) -> BeautifulSoup:
         try:
@@ -43,7 +46,7 @@ class NewsScraper:
 
     def page_scrape(self, url = None) -> List[Article]:
         soup = self.make_soup(url)
-
+        
         # `categories` is empty
         if not self.__get_categories__():
             self.main_page_category(soup)
@@ -52,15 +55,16 @@ class NewsScraper:
         article_list = []
 
         for article_raw in article_list_raw:
-            if article_raw.find('a'):
+            article_basics = article_raw.find('a')
+            if article_basics is not None:
                 article_list.append(Article(
-                    text_convert(article_raw.h3.a),         # Title
-                    article_raw.h3.a['href'],               # URL
+                    article_basics.text,         # Title
+                    article_basics.get('href'),               # URL
                     text_convert(article_raw.p)             # Description
                 ))
-        
-        # Set `articles` property
+        #TODO: Debug
         self.__set_articles__(article_list)
+        print(self.__get_articles__())
 
     def main_page_category(self, soup):
         category_dict = {}

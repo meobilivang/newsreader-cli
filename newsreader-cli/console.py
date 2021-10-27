@@ -9,7 +9,7 @@ class Console:
     def __init__(self) -> None:
         pass
 
-    def start_program():
+    def start_program(self):
         print(
             """
             #########################################################
@@ -20,7 +20,7 @@ class Console:
             """
         )
     
-    def end_program():
+    def end_program(self):
         print(
             """
             #########################################################
@@ -31,10 +31,10 @@ class Console:
             """
         )
     
-    def display_list_option(arg: List):
-        print("Choose the following options:")
+    def display_options(self, arg: List):
+        #print("Choose the following options:")
         for index, elem in enumerate(arg):
-            "({})\t{}".format(index, elem)
+            print("({})\t{}".format(index, elem))
     
     def display_options_menu(self):
         self.display_options(constants.OPTIONS_MENU)
@@ -49,6 +49,9 @@ class Console:
         self.display_options(constants.OPTIONS_ARTICLE)
 
     def display_page(self, category, article_list):
+        
+        category = "Menu" if category is None else category
+
         print(category.center(50, '#'))
         
         for (index, article) in enumerate(article_list):
@@ -79,7 +82,7 @@ class Console:
 
     def handler_menu(self, user_input, scraper):
         if (user_input == '0'):             # Main page
-            self.display_page(scraper.__get_articles__())
+            self.display_page(None, scraper.__get_articles__())
             
             page_execution = 0 
             while page_execution <= 0:
@@ -104,9 +107,14 @@ class Console:
                     category_pick_execution = 1
             
             # Scrape Page by category
-            scraper.page_scrape()
-
-            category_execution = self.handler_page(user_input, scraper.__get_articles__())
+            scraper.page_scrape(categories[category_pick_user_input])
+            self.display_page(category_pick_user_input, scraper.__get_articles__())
+            
+            category_page_execution = 0 
+            while category_page_execution <= 0:
+                self.display_options_page() 
+                user_input = input(constants.PROMPT_INPUT)
+                category_page_execution = self.handler_page(user_input, scraper.__get_articles__())
 
             return 0                        # Returns to Menu
         elif (user_input == '2'):           # Exit
@@ -141,8 +149,8 @@ class Console:
             return 0
         elif (user_input == '1'):           # Return to Menu
             return 1
+        # TODO: refresh
         # elif (user_input == '2'):         
-        #     # TODO: refresh
         #     pass
         else:
             print(constants.PROMPT_RE_INPUT)

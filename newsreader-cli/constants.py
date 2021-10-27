@@ -15,7 +15,6 @@ class Constants:
     ]
 
     OPTIONS_PAGE = [
-        "Refresh Main Board", 
         "Read an Article",
         "Return to Menu"
     ]
@@ -24,7 +23,7 @@ class Constants:
         "Return to Previous Page"
     ]
 
-    PROMPT_INPUT = "Please choice an option"
+    PROMPT_INPUT = "Please choice an option: "
     PROMPT_RE_INPUT = "Invalid option, please choose again."
 
 constants = Constants
