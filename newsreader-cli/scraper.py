@@ -24,6 +24,9 @@ class NewsScraper:
     def __set_articles__(self, articles):
         self.articles = articles
     
+    def clear_articles(self):
+        del self.articles [:]
+    
     def make_soup(self, url: str = None) -> BeautifulSoup:
         try:
             page = requests.get(constants.BASE_URL if (url is None) else url).text

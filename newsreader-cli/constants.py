@@ -4,6 +4,24 @@ class Constants:
     
     NOT_SUPPORTED_FORMAT = "video"
     
-    SECTION_DELIMETER = "\n \n"
+    SECTION_BIG_DELIMETER = "\n \n \n \n"
+    SECTION_MID_DELIMETER = "\n \n \n"
+    SECTION_SMALL_DELIMETER = "\n \n"
+
+    OPTIONS_MENU = [
+        "Visit Main Page", 
+        "Show Categories",
+        "Exit"
+    ]
+
+    OPTIONS_PAGE = [
+        "Refresh Main Board", 
+        "Read an Article",
+        "Return to Menu"
+    ]
+
+    OPTIONS_ARTICLE = [
+        "Return to Previous Page"
+    ]
 
 constants = Constants
