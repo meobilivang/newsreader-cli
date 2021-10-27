@@ -1,4 +1,3 @@
-
 def text_convert(input) -> str:
     """
         input: raw scraped html

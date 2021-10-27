@@ -24,4 +24,6 @@ class Constants:
         "Return to Previous Page"
     ]
 
+    PROMPT_RE_INPUT = "Invalid option, please choose again."
+
 constants = Constants

@@ -11,18 +11,23 @@ from console import Console
 #         print(elem.__get_title__())
 
 def main():
+    run_program = True
     console = Console()
     news_scrapper = NewsScraper()
     
-    while True:
-        console.start_program()
+    console.start_program()
+
+    while run_program:
         console.display_options_menu()
 
-        while True:
+        menu_execution = 0
+        while menu_execution <= 0:
             user_input = input("Please choose an option:")
-            console.handler_menu(user_input)
-        pass
-        
+            menu_execution, program_termination = console.handler_menu(user_input, news_scrapper)
+            run_program = True if program_termination is None else False                            # Exit program
+    
+
+    console.end_program()    
 
 if __name__ == "__main__":
     main()

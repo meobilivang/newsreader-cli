@@ -8,9 +8,11 @@ from urllib.error import HTTPError, URLError
 from bs4 import BeautifulSoup
 
 class NewsScraper:
+    
     def __init__(self, categories = {}, articles_current_page = []):
         self.categories = categories
         self.articles_current_page = articles_current_page
+        self.page_scrape()                                  # Default values
     
     def __get_categories__(self):
         return self.categories
@@ -25,8 +27,11 @@ class NewsScraper:
         self.articles = articles
     
     def clear_articles(self):
+        """
+            Clear articles list
+        """
         del self.articles [:]
-    
+
     def make_soup(self, url: str = None) -> BeautifulSoup:
         try:
             page = requests.get(constants.BASE_URL if (url is None) else url).text
@@ -56,8 +61,6 @@ class NewsScraper:
         
         # Set `articles` property
         self.__set_articles__(article_list)
-        
-        return article_list
 
     def main_page_category(self, soup):
         category_dict = {}
@@ -71,7 +74,7 @@ class NewsScraper:
             if category_title.lower() != constants.NOT_SUPPORTED_FORMAT: 
                 category_dict[category_title] = "{}{}".format(constants.BASE_URL, category_url)
 
-        self.__set_categories__(category_dict)
+        self.__set_categories__(category_dict)        
 
     def article_scrape(self, article: Article) -> Article:
         soup = self.make_soup(article.__get_url__())
@@ -87,5 +90,3 @@ class NewsScraper:
         article.__set_date__(article_date)
         article.__set_category__(article_category_list)
         article.__set_text_content__(content_paragraphs)
-
-        return article
