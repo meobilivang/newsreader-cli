@@ -58,10 +58,10 @@ class Console:
             print(''.center(40, '#'))
             print(constants.SECTION_MID_DELIMETER)
             print('{}. \t \t \t {}'.format(index, article.__get_title__()))
-            print('"\x1B[3m{}\x1B[0m"'.format(article.__get_description__()))       # italics
+            print('"{}"'.format(article.__get_description__()))       # italics
             print(''.center(40, '#'))
 
-    def display_detail_article(self, article):
+    def display_article(self, article):
         print(article.__get_title__().center(50, '#'))
         print(constants.SECTION_SMALL_DELIMETER)
         
@@ -73,12 +73,12 @@ class Console:
         print(constants.SECTION_SMALL_DELIMETER)
 
         for paragraph in article.__get_text_content__():
-            print('\t\x1B[3m{}\x1B[0m'.format(paragraph))
+            print('\t{}'.format(paragraph))
         
         print(''.center(40, '#'))
     
     def display_categories(self, categories: Dict):
-        self.display_list_option(list(categories.keys()))
+        self.display_options(categories)
 
     def handler_menu(self, user_input, scraper):
         if (user_input == '0'):             # Main page
@@ -88,57 +88,61 @@ class Console:
             while page_execution <= 0:
                 self.display_options_page() 
                 user_input = input(constants.PROMPT_INPUT)
-                page_execution = self.handler_page(user_input, scraper.__get_articles__())
+                page_execution = self.handler_page(user_input, scraper)
 
-            return 0                        # Returns to Menu
+            return 0, None                        # Returns to Menu
         elif (user_input == '1'):           # Show categories
-            categories = scraper.__get_categories()
+            categories = scraper.__get_categories__()
             categories_key_list = list(categories.keys())
 
             self.display_categories(categories_key_list)
 
             category_pick_execution = 0 
             while category_pick_execution <= 0:
-                category_pick_user_input = input(constants.PROMPT_INPUT)
-                if (int(category_pick_user_input) < 0 
-                    or int(category_pick_user_input) >= len(categories_key_list)):     # Invalid index
+                category_pick_user_input = int(input(constants.PROMPT_INPUT))
+                if (category_pick_user_input < 0 
+                    or category_pick_user_input > len(categories_key_list)):     # Invalid index
                     print("Invalid Category.")
                 else:
                     category_pick_execution = 1
             
             # Scrape Page by category
-            scraper.page_scrape(categories[category_pick_user_input])
-            self.display_page(category_pick_user_input, scraper.__get_articles__())
+            scraper.page_scrape(categories.get(categories_key_list[category_pick_user_input]))
+            
+            self.display_page(categories_key_list[category_pick_user_input], scraper.__get_articles__())
             
             category_page_execution = 0 
             while category_page_execution <= 0:
                 self.display_options_page() 
                 user_input = input(constants.PROMPT_INPUT)
-                category_page_execution = self.handler_page(user_input, scraper.__get_articles__())
+                category_page_execution = self.handler_page(user_input, scraper)
 
-            return 0                        # Returns to Menu
+            return 0, None                        # Returns to Menu
         elif (user_input == '2'):           # Exit
             # Terminate
             program_termination = True
             return 1, program_termination
         else:
             print(constants.PROMPT_RE_INPUT)
-            return -1                       # Ask user to re-input
+            return -1, None                       # Ask user to re-input
 
-    def handler_page(self, user_input, article_list: List[Article]):
+    def handler_page(self, user_input, scraper):
         if (user_input == '0'):             # Read specific article
-            
+            #TODO: Debug
             article_pick_execution = 0
             while article_pick_execution <= 0:
                 article_pick_index = input("Choose an article to read:")
+
                 if (int(article_pick_index) < 0 
-                    or int(article_pick_index) >= len(article_list)):     # Invalid index
-                    print("Invalid article.")
+                    or int(article_pick_index) > len(scraper.__get_articles__())):     # Invalid index
+                    print("Invalid Article.")
                 else:
                     article_pick_execution = 1
-                
+            
+            scraper.article_scrape(scraper.__get_articles__()[int(article_pick_index)])
+
             #Article found, display it
-            self.display_article(int(article_pick_index))
+            self.display_article(scraper.__get_articles__()[int(article_pick_index)])
             
             article_execution = 0
             while article_execution <= 0:
@@ -165,7 +169,7 @@ class Console:
             return -1
 
     def handler_article(self, user_input):
-        if (user_input == '1'):             # Returns to previous page
+        if (user_input == '0'):             # Returns to previous page
             return 1
         else:
             print(constants.PROMPT_RE_INPUT)

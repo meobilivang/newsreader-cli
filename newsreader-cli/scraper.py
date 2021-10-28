@@ -23,8 +23,7 @@ class NewsScraper:
         return self.articles_current_page
     
     def __set_articles__(self, articles):
-        print(articles)
-        self.articles = articles
+        self.articles_current_page = articles
     
     def clear_articles(self):
         """
@@ -58,13 +57,13 @@ class NewsScraper:
             article_basics = article_raw.find('a')
             if article_basics is not None:
                 article_list.append(Article(
-                    article_basics.text,         # Title
-                    article_basics.get('href'),               # URL
+                    article_basics.text,                    # Title
+                    article_basics.get('href'),             # URL
                     text_convert(article_raw.p)             # Description
                 ))
         #TODO: Debug
         self.__set_articles__(article_list)
-        print(self.__get_articles__())
+        #print(self.__get_articles__())
 
     def main_page_category(self, soup):
         category_dict = {}

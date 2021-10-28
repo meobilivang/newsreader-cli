@@ -1,6 +1,5 @@
 from typing import Text
 
-
 class Article:
     def __init__(self, title = "", url = "", description = "", text_content = [], date = "", category = []):
         self.title = title
@@ -8,7 +7,7 @@ class Article:
         self.description = description
         self.text_content = text_content
         self.date = date
-        self.catergory = category
+        self.category = category
 
     def __get_title__(self):
         return self.title
@@ -25,7 +24,7 @@ class Article:
     def __get_date__(self):
         return self.date
     
-    def __get_catergory__(self):
+    def __get_category__(self):
         return self.category
     
     def __set_date__(self, date):

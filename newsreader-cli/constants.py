@@ -4,9 +4,9 @@ class Constants:
     
     NOT_SUPPORTED_FORMAT = "video"
     
-    SECTION_BIG_DELIMETER = "\n \n \n \n"
-    SECTION_MID_DELIMETER = "\n \n \n"
-    SECTION_SMALL_DELIMETER = "\n \n"
+    SECTION_BIG_DELIMETER = "\n \n \n"
+    SECTION_MID_DELIMETER = "\n \n"
+    SECTION_SMALL_DELIMETER = "\n"
 
     OPTIONS_MENU = [
         "Visit Main Page", 
@@ -26,4 +26,4 @@ class Constants:
     PROMPT_INPUT = "Please choice an option: "
     PROMPT_RE_INPUT = "Invalid option, please choose again."
 
-constants = Constants
+constants = Constants()
