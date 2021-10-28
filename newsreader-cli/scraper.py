@@ -13,16 +13,20 @@ class NewsScraper:
         self.categories = categories
         self.articles_current_page = articles_current_page
     
-    def __get_categories__(self):
+    @categories.getter
+    def categories(self):
         return self.categories
     
-    def __set_categories__(self, input_categories):
+    @categories.setter
+    def categories(self, input_categories):
         self.categories = input_categories
     
-    def __get_articles__(self):
+    @articles_current_page.getter
+    def articles_current_page(self):
         return self.articles_current_page
     
-    def __set_articles__(self, articles):
+    @articles_current_page.setter
+    def articles_current_page(self, articles):
         self.articles_current_page = articles
     
     def clear_articles(self):
@@ -47,7 +51,7 @@ class NewsScraper:
         soup = self.make_soup(url)
         
         # `categories` is empty
-        if not self.__get_categories__():
+        if not self.categories:
             self.main_page_category(soup)
 
         article_list_raw = soup.find_all('article')    
@@ -62,7 +66,7 @@ class NewsScraper:
                     text_convert(article_raw.p)             # Description
                 ))
         #TODO: Debug
-        self.__set_articles__(article_list)
+        self.articles_ = article_list
         #print(self.__get_articles__())
 
     def main_page_category(self, soup):

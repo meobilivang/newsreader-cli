@@ -1,15 +1,6 @@
 from scraper import NewsScraper
-from article import Article
 from console import Console
 from constants import constants
-
-# def main():
-#     news_scrapper = NewsScraper()
-
-#     article_list_obj = news_scrapper.page_scrape()
-
-#     for elem in article_list_obj:
-#         print(elem.__get_title__())
 
 def main():
     run_program = True
@@ -20,8 +11,6 @@ def main():
     console.start_program()
 
     while run_program:
-        #console.display_options_menu()
-
         menu_execution = 0
         while menu_execution <= 0:
             #TODO: remove
