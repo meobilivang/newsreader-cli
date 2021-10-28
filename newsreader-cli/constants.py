@@ -5,7 +5,7 @@ class Constants:
     NOT_SUPPORTED_FORMAT = "video"
     
     SECTION_BIG_DELIMETER = "\n \n \n"
-    SECTION_MID_DELIMETER = "\n \n"
+    SECTION_MED_DELIMETER = "\n \n"
     SECTION_SMALL_DELIMETER = "\n"
 
     OPTIONS_MENU = [

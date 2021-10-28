@@ -2,46 +2,46 @@ from typing import Text
 
 class Article:
     def __init__(self, title = "", url = "", description = "", text_content = [], date = "", category = []):
-        self.title = title
-        self.url = url
-        self.description = description
-        self.text_content = text_content
-        self.date = date
-        self.category = category
+        self._title = title
+        self._url = url
+        self._description = description
+        self._text_content = text_content
+        self._date = date
+        self._category = category
 
-    @title.getter
+    @property
     def title(self):
-        return self.title
+        return self._title
     
-    @url.getter
+    @property
     def url(self):
-        return self.url
+        return self._url
     
-    @description.getter
+    @property
     def description(self):
-        return self.description
+        return self._description
 
-    @text_content.getter
+    @property
     def text_content(self):
-        return self.text_content
+        return self._text_content
 
-    @date.getter
+    @property
     def date(self):
-        return self.date
+        return self._date
     
-    @category.getter
+    @property
     def category(self):
-        return self.category
+        return self._category
     
     @date.setter
     def date(self, date):
-        self.date = date
+        self._date = date
     
     @text_content.setter
     def text_content(self, new_text_content_list):
-        self.text_content = new_text_content_list
+        self._text_content = new_text_content_list
     
     @category.setter
     def category(self, new_category_list):
-        self.category = new_category_list
+        self._category = new_category_list
     

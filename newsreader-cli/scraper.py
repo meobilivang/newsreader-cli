@@ -3,38 +3,38 @@ import time
 from typing import List
 from article import Article
 from constants import constants
-from utility import text_convert
+from utility import text_convert, text_sanitizer
 from urllib.error import HTTPError, URLError
 from bs4 import BeautifulSoup
 
 class NewsScraper:
     
     def __init__(self, categories = {}, articles_current_page = []):
-        self.categories = categories
-        self.articles_current_page = articles_current_page
+        self._categories = categories
+        self._articles_current_page = articles_current_page
         self.page_scrape()
     
-    @categories.getter
+    @property
     def categories(self):
-        return self.categories
+        return self._categories
     
+    @property
+    def articles_current_page(self):
+        return self._articles_current_page
+
     @categories.setter
     def categories(self, input_categories):
-        self.categories = input_categories
-    
-    @articles_current_page.getter
-    def articles_current_page(self):
-        return self.articles_current_page
+        self._categories = input_categories
     
     @articles_current_page.setter
     def articles_current_page(self, articles):
-        self.articles_current_page = articles
+        self._articles_current_page = articles
     
     def clear_articles(self):
         """
             Clear articles list
         """
-        del self.articles [:]
+        del self._articles [:]
     
     # def default(self):
     #     self.page_scrape()                                  # Default values
@@ -62,13 +62,12 @@ class NewsScraper:
             article_basics = article_raw.find('a')
             if article_basics is not None:
                 article_list.append(Article(
-                    article_basics.text,                    # Title
+                    text_sanitizer(article_basics.text),                    # Title
                     article_basics.get('href'),             # URL
                     text_convert(article_raw.p)             # Description
                 ))
-        #TODO: Debug
-        self.articles_ = article_list
-        #print(self.__get_articles__())
+        
+        self.articles = article_list
 
     def main_page_category(self, soup):
         category_dict = {}
@@ -77,15 +76,15 @@ class NewsScraper:
             inner_tag = category_raw.find("a")
 
             category_url = inner_tag.get('href').replace('/', '')
-            category_title = inner_tag.text.replace('\n', '').replace('\r', '').strip()
+            category_title = text_sanitizer(inner_tag.text)
             
             if category_title.lower() != constants.NOT_SUPPORTED_FORMAT: 
                 category_dict[category_title] = "{}{}".format(constants.BASE_URL, category_url)
 
-        self.__set_categories__(category_dict)        
+        self.categories = category_dict        
 
     def article_scrape(self, article: Article) -> Article:
-        soup = self.make_soup(article.__get_url__())
+        soup = self.make_soup(article.url)
 
         article_date_raw = soup.find("span", class_="date")
         article_category_list_raw = soup.find("ul", class_="breadcrumb").find_all("a")
@@ -95,6 +94,6 @@ class NewsScraper:
         article_category_list = [elem.text for elem in article_category_list_raw]
         content_paragraphs = [text_convert(article) for article in article_text_content_list_raw]
 
-        article.__set_date__(article_date)
-        article.__set_category__(article_category_list)
-        article.__set_text_content__(content_paragraphs)
+        article.date = article_date
+        article.category = article_category_list
+        article.text_content = content_paragraphs

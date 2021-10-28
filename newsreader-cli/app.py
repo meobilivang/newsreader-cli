@@ -6,7 +6,7 @@ def main():
     run_program = True
     console = Console()
     news_scrapper = NewsScraper()
-    news_scrapper.default()
+    #news_scrapper.default()
     
     console.start_program()
 
