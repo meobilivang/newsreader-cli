@@ -4,9 +4,8 @@ import scraper
 from constants import constants
 from article import Article
 
-
 class Console:
-    def __init__(self) -> None:
+    def init(self) -> None:
         pass
 
     def start_program(self):
@@ -41,9 +40,6 @@ class Console:
 
     def display_options_page(self):
         self.display_options(constants.OPTIONS_PAGE)
-        
-    # def display_options_category_page(self):
-    #     self.display_options(constants.OPTIONS_ARTICLE)
     
     def display_options_article(self):
         self.display_options(constants.OPTIONS_ARTICLE)
@@ -57,22 +53,22 @@ class Console:
         for (index, article) in enumerate(article_list):
             print(''.center(40, '#'))
             print(constants.SECTION_MID_DELIMETER)
-            print('{}. \t \t \t {}'.format(index, article.__get_title__()))
-            print('"{}"'.format(article.__get_description__()))       # italics
+            print('{}. \t \t \t {}'.format(index, article.title()))
+            print('"{}"'.format(article.description()))       # italics
             print(''.center(40, '#'))
 
     def display_article(self, article):
-        print(article.__get_title__().center(50, '#'))
+        print(article.title().center(50, '#'))
         print(constants.SECTION_SMALL_DELIMETER)
         
         display_category = ""
-        for category in article.__get_category__():
+        for category in article.category():
             display_category += category + ">>>"
 
-        print("{}\t \t \t \t{}".format(display_category, article.__get_date__())) 
+        print("{}\t \t \t \t{}".format(display_category, article.date())) 
         print(constants.SECTION_SMALL_DELIMETER)
 
-        for paragraph in article.__get_text_content__():
+        for paragraph in article.text_content():
             print('\t{}'.format(paragraph))
         
         print(''.center(40, '#'))
@@ -82,7 +78,7 @@ class Console:
 
     def handler_menu(self, user_input, scraper):
         if (user_input == '0'):             # Main page
-            self.display_page(None, scraper.__get_articles__())
+            self.display_page(None, scraper.articles())
             
             page_execution = 0 
             while page_execution <= 0:
@@ -92,7 +88,7 @@ class Console:
 
             return 0, None                        # Returns to Menu
         elif (user_input == '1'):           # Show categories
-            categories = scraper.__get_categories__()
+            categories = scraper.categories()
             categories_key_list = list(categories.keys())
 
             self.display_categories(categories_key_list)
@@ -109,7 +105,7 @@ class Console:
             # Scrape Page by category
             scraper.page_scrape(categories.get(categories_key_list[category_pick_user_input]))
             
-            self.display_page(categories_key_list[category_pick_user_input], scraper.__get_articles__())
+            self.display_page(categories_key_list[category_pick_user_input], scraper.articles())
             
             category_page_execution = 0 
             while category_page_execution <= 0:
@@ -134,15 +130,15 @@ class Console:
                 article_pick_index = input("Choose an article to read:")
 
                 if (int(article_pick_index) < 0 
-                    or int(article_pick_index) > len(scraper.__get_articles__())):     # Invalid index
+                    or int(article_pick_index) > len(scraper.articles())):     # Invalid index
                     print("Invalid Article.")
                 else:
                     article_pick_execution = 1
             
-            scraper.article_scrape(scraper.__get_articles__()[int(article_pick_index)])
+            scraper.article_scrape(scraper.articles()[int(article_pick_index)])
 
             #Article found, display it
-            self.display_article(scraper.__get_articles__()[int(article_pick_index)])
+            self.display_article(scraper.articles()[int(article_pick_index)])
             
             article_execution = 0
             while article_execution <= 0:
@@ -162,7 +158,7 @@ class Console:
     
     def handler_category(self, user_input):
         if (user_input == '0'):
-            self.display_page(scraper.__get_articles__())
+            self.display_page(scraper.articles())
             return 1
         else:
             print(constants.PROMPT_RE_INPUT)

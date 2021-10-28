@@ -9,30 +9,39 @@ class Article:
         self.date = date
         self.category = category
 
-    def __get_title__(self):
+    @title.getter
+    def title(self):
         return self.title
     
-    def __get_url__(self):
+    @url.getter
+    def url(self):
         return self.url
     
-    def __get_description__(self):
+    @description.getter
+    def description(self):
         return self.description
-    
-    def __get_text_content__(self):
+
+    @text_content.getter
+    def text_content(self):
         return self.text_content
 
-    def __get_date__(self):
+    @date.getter
+    def date(self):
         return self.date
     
-    def __get_category__(self):
+    @category.getter
+    def category(self):
         return self.category
     
-    def __set_date__(self, date):
+    @date.setter
+    def date(self, date):
         self.date = date
     
-    def __set_text_content__(self, new_text_content_list):
+    @text_content.setter
+    def text_content(self, new_text_content_list):
         self.text_content = new_text_content_list
     
-    def __set_category__(self, new_category_list):
+    @category.setter
+    def category(self, new_category_list):
         self.category = new_category_list
     
