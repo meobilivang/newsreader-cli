@@ -12,6 +12,7 @@ class NewsScraper:
     def __init__(self, categories = {}, articles_current_page = []):
         self.categories = categories
         self.articles_current_page = articles_current_page
+        self.page_scrape()
     
     @categories.getter
     def categories(self):
@@ -35,8 +36,8 @@ class NewsScraper:
         """
         del self.articles [:]
     
-    def default(self):
-        self.page_scrape()                                  # Default values
+    # def default(self):
+    #     self.page_scrape()                                  # Default values
 
     def make_soup(self, url: str = None) -> BeautifulSoup:
         try:
