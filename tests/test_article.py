@@ -1,6 +1,6 @@
 import pytest
-import validators
-from test_data.data import data
+
+from test_data.articles_test_data import data
 from newsreadercli.article import Article
 
 def test_article():

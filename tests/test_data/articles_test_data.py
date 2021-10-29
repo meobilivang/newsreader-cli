@@ -7,6 +7,5 @@ class ArticleTestData:
         'text_content': "Venenatis cras sed felis eget velit aliquet.",
         'category': ["Góc nhìn", "Giáo dục & tri thức"]        
     }
-    article_2 = {}
 
 data = ArticleTestData()

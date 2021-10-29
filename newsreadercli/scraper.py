@@ -1,9 +1,10 @@
 import requests
 import time
+
 from typing import List
-from article import Article
-from constants import constants
-from utility import text_convert, text_sanitizer
+from newsreadercli.article import Article
+from newsreadercli.constants import constants
+from newsreadercli.utility import text_convert, text_sanitizer
 from urllib.error import HTTPError, URLError
 from bs4 import BeautifulSoup
 
@@ -12,7 +13,6 @@ class NewsScraper:
     def __init__(self, categories = {}, articles_current_page = []):
         self._categories = categories
         self._articles_current_page = articles_current_page
-        self.page_scrape()
     
     @property
     def categories(self):
@@ -36,8 +36,8 @@ class NewsScraper:
         """
         del self._articles [:]
     
-    # def default(self):
-    #     self.page_scrape()                                  # Default values
+    def default(self):
+        self.page_scrape()                                  # Default values
 
     def make_soup(self, url = None, page = None) -> BeautifulSoup:
         if page is None:
@@ -50,7 +50,7 @@ class NewsScraper:
         return BeautifulSoup(page, "html.parser")
 
     def page_scrape(self, url = None, page = None) -> List[Article]:
-        soup = self.make_soup(url)
+        soup = self.make_soup(url, page)
         
         # `categories` is empty
         if not self.categories:

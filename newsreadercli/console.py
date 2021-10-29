@@ -1,5 +1,6 @@
-from typing import Dict, List
 import scraper
+
+from typing import Dict, List
 from constants import constants
 
 class Console:
