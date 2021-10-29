@@ -17,7 +17,7 @@ A simple CLI app to read articles from `Vnexpress` - ranking the most popular Vi
 - :scroll: Libs: 
     - Web Scraper: [BeautifulSoup 4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
     - Testing: [PyTest](https://docs.pytest.org/en/6.2.x/)
-- :delivery: Continuous Integration: [Travis](https://docs.travis-ci.com/)
+- 📦: Continuous Integration: [Travis](https://docs.travis-ci.com/)
 
 ## :question: How to run the application ?
 
