@@ -95,7 +95,7 @@ class Console:
             category_pick_execution = 0 
             while category_pick_execution <= 0:
                 category_pick_user_input = int(input(constants.PROMPT_INPUT))
-                if (category_pick_user_input < 0 
+                if (category_pick_user_input < 0 \
                     or category_pick_user_input > len(categories_key_list)):     # Invalid index
                     print("Invalid Category.")
                 else:
@@ -118,11 +118,10 @@ class Console:
             return 1, program_termination
         else:
             print(constants.PROMPT_RE_INPUT)
-            return -1, None                       # Ask user to re-input
+            return -1, None                         # Ask user to re-input
 
     def handler_page(self, user_input, scraper):
-        if (user_input == '0'):             # Read specific article
-            #TODO: Debug
+        if (user_input == '0'):                     # Read specific article
             article_pick_execution = 0
             while article_pick_execution <= 0:
                 article_pick_index = input("Choose an article to read: ")

@@ -39,16 +39,17 @@ class NewsScraper:
     # def default(self):
     #     self.page_scrape()                                  # Default values
 
-    def make_soup(self, url: str = None) -> BeautifulSoup:
-        try:
-            page = requests.get(constants.BASE_URL if (url is None) else url).text
-            time.sleep(0.1)
-        except (URLError, HTTPError) as error:
-            return None
+    def make_soup(self, url = None, page = None) -> BeautifulSoup:
+        if page is None:
+            try:
+                page = requests.get(constants.BASE_URL if (url is None) else url).text
+                time.sleep(0.1)
+            except (URLError, HTTPError) as error:
+                return None
 
         return BeautifulSoup(page, "html.parser")
 
-    def page_scrape(self, url = None) -> List[Article]:
+    def page_scrape(self, url = None, page = None) -> List[Article]:
         soup = self.make_soup(url)
         
         # `categories` is empty
