@@ -46,7 +46,7 @@ $ pip install -r requirements.txt
 4. Run application!
 
 ```bash
-$ python -m newsreadercli/app.py
+$ python -m newsreadercli main
 ```
 
 ## :file_folder: What to do next ?
