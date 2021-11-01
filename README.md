@@ -1,6 +1,6 @@
 # `newsreader-cli`
 
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/meobilivang/Phase-1-Training-VTDT-VTNET/blob/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/meobilivang/newsreader-cli/blob/master/LICENSE)
 
 ## :book: Description
 
@@ -9,7 +9,7 @@ A simple CLI app to read articles from `Vnexpress` - ranking the most popular Vi
 ## :dart: Why this app?
 
 - First thing first, a great chance to brush up my programming skills in general and my Python in specific.
-- I really want to read news in a cooler way. Who needs a smart phone/web browser? Now I can legitly read news during class on Terminal and people will think that I am hacking into `NASA` :technologist:.
+- I really want to read news in a cooler way. Who needs a smart phone/web browser? Now I can legitly read news during class on Terminal and people will think that I am hacking :technologist:.
 
 ## :gear: Tech Stack
 
