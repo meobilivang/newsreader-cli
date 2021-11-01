@@ -2,11 +2,12 @@ import requests
 import time
 
 from typing import List
-from newsreadercli.article import Article
-from newsreadercli.constants import constants
-from newsreadercli.utility import text_convert, text_sanitizer
 from urllib.error import HTTPError, URLError
 from bs4 import BeautifulSoup
+
+from .article import Article
+from .constants import constants
+from .utility import text_convert, text_sanitizer
 
 class NewsScraper:
     
@@ -31,15 +32,18 @@ class NewsScraper:
         self._articles_current_page = articles
     
     def clear_articles(self):
-        """
-            Clear articles list
-        """
+        """Clear articles list"""
         del self._articles [:]
     
     def default(self):
         self.page_scrape()                                  # Default values
 
     def make_soup(self, url = None, page = None) -> BeautifulSoup:
+        """Parses HTML page with BeautifulSoup.
+
+        :url:  Link to specific page to scrape
+        :page: a passed HTML file (defaul: None)
+        """
         if page is None:
             try:
                 page = requests.get(constants.BASE_URL if (url is None) else url).text
@@ -50,6 +54,12 @@ class NewsScraper:
         return BeautifulSoup(page, "html.parser")
 
     def page_scrape(self, url = None, page = None) -> List[Article]:
+        """Returns available categories.
+        
+        :url:  URL to specific page (default: None)
+        :page: a HTML file (default: None)
+        :soup: HTML page parsed by BeautifulSoup
+        """
         soup = self.make_soup(url, page)
         
         # `categories` is empty
@@ -71,6 +81,10 @@ class NewsScraper:
         self.articles = article_list
 
     def main_page_category(self, soup):
+        """Returns available categories.
+        
+        :soup: HTML page parsed by BeautifulSoup
+        """
         category_dict = {}
 
         for category_raw in soup.find_all('li', { "data-id": True }):
@@ -85,6 +99,10 @@ class NewsScraper:
         self.categories = category_dict        
 
     def article_scrape(self, article: Article) -> Article:
+        """Scrape a specific article
+
+        :article: the article that we need to scrape details.
+        """
         soup = self.make_soup(article.url)
 
         article_date_raw = soup.find("span", class_="date")

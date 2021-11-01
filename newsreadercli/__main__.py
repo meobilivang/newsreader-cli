@@ -1,8 +1,8 @@
-from scraper import NewsScraper
-from console import Console
-from constants import constants
+from .scraper import NewsScraper
+from .console import Console
+from .constants import constants
 
-def main():
+if __name__ == "__main__":
     run_program = True
     console = Console()
     news_scrapper = NewsScraper()
@@ -19,7 +19,3 @@ def main():
             run_program = True if program_termination is None else False           # Exit program
 
     console.end_program()
-    return 1
-
-if __name__ == "__main__":
-    main()

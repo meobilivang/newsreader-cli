@@ -1,7 +1,7 @@
 import pytest
 
-from test_data.articles_test_data import data
-from newsreadercli.article import Article
+from newsreadercli import Article
+from .test_data.articles_test_data import data
 
 def test_article():
     

@@ -1,5 +1,3 @@
-from typing import Text
-
 class Article:
     def __init__(self, title = "", url = "", description = "", text_content = [], date = "", category = []):
         self._title = title

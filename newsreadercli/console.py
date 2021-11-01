@@ -1,7 +1,6 @@
-import scraper
-
 from typing import Dict, List
-from constants import constants
+
+from .constants import constants
 
 class Console:
     def init(self) -> None:
